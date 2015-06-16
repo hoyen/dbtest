@@ -9,9 +9,23 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MyDBHelper extends SQLiteOpenHelper{
 
-    public static  final String TABLE_NAME = "ddd";
+    public static  final String TABLEAAA_NAME = "aaa";
 
     public static final String KEY_ID = "_id";
+    public static final String LOCK_NAME_COLUMN = "lockname";
+    public static final String LOCK_ID_COLUMN = "lockid";
+    public static final String LOCK_MANAGER = "manager";
+    // 使用上面宣告的變數建立表格的SQL指令
+    public static final String CREATE_TABLE_AAA =
+            "CREATE TABLE " + TABLEAAA_NAME + " (" +
+                    KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    LOCK_NAME_COLUMN + " TEXT, " +
+                    LOCK_MANAGER + " INTEGER, " +
+                    LOCK_ID_COLUMN + " INTEGER)";
+
+    //=========     The second table
+    public static  final String TABLE_NAME = "ddd";
+
     public static final String NAME_COLUMN = "name";
     public static final String AGE_COLUMN = "age";
     // 使用上面宣告的變數建立表格的SQL指令
@@ -20,6 +34,7 @@ public class MyDBHelper extends SQLiteOpenHelper{
                     KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NAME_COLUMN + " TEXT, " +
                     AGE_COLUMN + " INTEGER)";
+
     // 資料庫名稱
     public static final String DATABASE_NAME = "dss.db";
     // 資料庫版本，資料結構改變的時候要更改這個數字，通常是加一
@@ -44,11 +59,13 @@ public class MyDBHelper extends SQLiteOpenHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_TABLE_AAA);
         db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLEAAA_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
